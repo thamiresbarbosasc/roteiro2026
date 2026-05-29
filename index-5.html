@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>XLIII ECC · Roteiro</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0b1f45">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ECC Roteiro">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0b1f45;--navy2:#0f2a5c;--blue:#1e4d9e;--blue2:#2460c4;
+  --gold:#c8971e;--gold2:#e8b83a;--gold3:#f5d878;
+  --cream:#faf8f3;--white:#ffffff;--mist:#eef2f9;--slate:#5a6a8a;--text:#1a2740;
+  --radius:14px;--shadow:0 8px 40px rgba(11,31,69,0.13);
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);min-height:100vh;overflow-x:hidden;padding-bottom:env(safe-area-inset-bottom,0)}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 10% 0%,rgba(30,77,158,0.07) 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 90% 100%,rgba(200,151,30,0.06) 0%,transparent 50%);pointer-events:none;z-index:0}
+
+/* HEADER */
+.header{background:linear-gradient(160deg,var(--navy) 0%,var(--navy2) 60%,#0d2550 100%);padding:30px 24px 22px;text-align:center;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 20% 50%,rgba(200,151,30,0.08) 0%,transparent 40%),radial-gradient(circle at 80% 20%,rgba(36,96,196,0.15) 0%,transparent 40%)}
+.header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),var(--gold),transparent)}
+.header-inner{position:relative;z-index:1}
+.header-eyebrow{font-size:10px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:var(--gold2);opacity:.85;margin-bottom:8px}
+.header-title{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,6vw,40px);font-weight:300;color:var(--white);line-height:1.1;letter-spacing:1px;margin-bottom:10px}
+.header-title span{color:var(--gold2);font-style:italic}
+.header-badge{display:inline-flex;align-items:center;gap:8px;margin-top:4px;background:rgba(200,151,30,0.18);border:1px solid rgba(200,151,30,0.4);border-radius:50px;padding:6px 18px;font-size:11px;font-weight:500;color:var(--gold3);letter-spacing:1px}
+
+/* DAY SWITCHER */
+.day-switcher{display:flex;justify-content:center;gap:8px;padding:16px 16px 12px;position:sticky;top:0;z-index:100;background:var(--cream);border-bottom:1px solid rgba(11,31,69,0.08)}
+.day-btn{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 16px;border:1.5px solid rgba(11,31,69,0.12);border-radius:var(--radius);background:var(--white);cursor:pointer;transition:all .25s cubic-bezier(.4,0,.2,1);flex:1;max-width:150px;color:var(--slate);box-shadow:0 2px 8px rgba(11,31,69,0.06)}
+.day-btn:hover{border-color:var(--blue2);color:var(--blue);transform:translateY(-2px);box-shadow:0 6px 20px rgba(30,77,158,0.12)}
+.day-btn.active{background:var(--navy);border-color:var(--navy);color:var(--white);box-shadow:0 6px 24px rgba(11,31,69,0.3);transform:translateY(-2px)}
+.day-btn .btn-icon{font-size:18px;line-height:1}
+.day-btn .btn-label{font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:600}
+.day-btn .btn-date{font-size:9px;letter-spacing:1px;opacity:.6}
+.day-btn.active .btn-date{opacity:.7}
+
+/* MAIN */
+.main{max-width:840px;margin:0 auto;padding:20px 14px 60px;position:relative;z-index:1}
+
+/* DAY PANEL */
+.day-panel{display:none;animation:fadeUp .35s ease}
+.day-panel.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* DAY HERO */
+.day-hero{background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 100%);border-radius:18px;padding:18px 22px;display:flex;align-items:center;gap:14px;margin-bottom:18px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.day-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold2),transparent)}
+.day-hero-icon{font-size:34px;flex-shrink:0}
+.day-hero-text h2{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;color:var(--white);letter-spacing:1px}
+.day-hero-text h2 span{color:var(--gold2);font-style:italic}
+.day-hero-text p{font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:2px;margin-top:3px}
+.day-hero-count{margin-left:auto;flex-shrink:0;text-align:center;background:rgba(200,151,30,0.18);border:1px solid rgba(200,151,30,0.3);border-radius:10px;padding:8px 14px;color:var(--gold2)}
+.day-hero-count strong{display:block;font-size:20px;font-family:'Cormorant Garamond',serif}
+.day-hero-count span{font-size:9px;letter-spacing:2px;opacity:.7}
+
+/* SEARCH */
+.search-bar{position:relative;margin-bottom:14px}
+.search-bar input{width:100%;padding:10px 14px 10px 38px;border:1.5px solid rgba(11,31,69,0.12);border-radius:50px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:var(--white);outline:none;transition:border-color .2s}
+.search-bar input:focus{border-color:var(--blue2)}
+.search-bar input::placeholder{color:var(--slate);opacity:.6}
+.search-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--slate);opacity:.5}
+
+/* FILTER PILLS */
+.filter-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.filter-pill{display:flex;align-items:center;gap:5px;padding:5px 12px;border-radius:50px;border:1px solid rgba(11,31,69,0.12);background:var(--white);font-size:11px;font-weight:500;color:var(--slate);cursor:pointer;transition:all .2s}
+.filter-pill:hover{border-color:var(--blue2);color:var(--blue)}
+.filter-pill.active-filter{background:var(--navy);color:var(--white);border-color:var(--navy)}
+.filter-pill .pill-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+
+/* SCHEDULE LIST */
+.schedule-list{display:flex;flex-direction:column;gap:5px}
+
+/* CARD */
+.scard{background:var(--white);border-radius:var(--radius);border:1px solid rgba(11,31,69,0.07);overflow:hidden;transition:all .22s cubic-bezier(.4,0,.2,1);box-shadow:0 1px 6px rgba(11,31,69,0.05);cursor:pointer}
+.scard:hover{box-shadow:0 6px 24px rgba(11,31,69,0.11);transform:translateX(3px)}
+.scard.hidden{display:none}
+.scard::before{content:'';display:block;height:2px;background:var(--accent-color,var(--mist))}
+.scard-header{display:flex;align-items:center}
+.scard-time{padding:12px 12px;min-width:68px;text-align:center;border-right:1px solid rgba(11,31,69,0.06);flex-shrink:0}
+.t-start{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;color:var(--navy);line-height:1}
+.t-end{font-size:10px;color:var(--slate);margin-top:2px}
+.t-dur{display:inline-block;margin-top:4px;background:var(--mist);border-radius:4px;padding:2px 6px;font-size:9px;font-weight:600;color:var(--blue);letter-spacing:.5px}
+.scard-body{flex:1;padding:11px 14px;min-width:0}
+.scard-category{font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:3px;color:var(--cat-color,var(--slate))}
+.scard-title{font-size:13px;font-weight:600;color:var(--text);line-height:1.3}
+.scard-title.main-event{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:600;color:var(--navy)}
+.scard-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:5px}
+.scard-meta-item{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--slate)}
+.scard-arrow{padding:12px 12px;flex-shrink:0;color:var(--slate);transition:transform .2s;font-size:11px}
+.scard.open .scard-arrow{transform:rotate(180deg)}
+
+/* EXPAND */
+.scard-detail{max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.4,0,.2,1);border-top:1px solid transparent}
+.scard.open .scard-detail{max-height:400px;border-top-color:rgba(11,31,69,0.06)}
+.scard-detail-inner{padding:12px 14px 14px 94px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:480px){.scard-detail-inner{grid-template-columns:1fr;padding-left:14px}}
+.detail-group label{display:block;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--slate);margin-bottom:3px}
+.detail-group p{font-size:12px;color:var(--text);line-height:1.5}
+.detail-group p.music-text{font-family:'Cormorant Garamond',serif;font-size:13px;color:var(--navy);font-style:italic}
+.detail-group p.music-main{font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:600;color:var(--gold);font-style:normal}
+.detail-group p .tom{display:inline-block;background:var(--mist);border-radius:4px;padding:1px 6px;font-size:10px;font-weight:700;color:var(--blue);font-style:normal;margin-left:2px}
+
+/* CATEGORY COLORS */
+.cat-P{--accent-color:#3b82f6;--cat-color:#2563eb}
+.cat-A{--accent-color:#d97706;--cat-color:#b45309}
+.cat-R{--accent-color:#16a34a;--cat-color:#15803d}
+.cat-C{--accent-color:#7c3aed;--cat-color:#6d28d9}
+.cat-L{--accent-color:#db2777;--cat-color:#be185d}
+.cat-S{--accent-color:#ea580c;--cat-color:#c2410c}
+.cat-N{--accent-color:rgba(11,31,69,0.1);--cat-color:var(--slate)}
+
+/* EMPTY */
+.empty-state{text-align:center;padding:40px 20px;color:var(--slate);font-size:13px;display:none}
+.empty-state.show{display:block}
+
+/* INSTALL BANNER */
+#install-banner{display:none;position:fixed;bottom:20px;left:16px;right:16px;z-index:9999;background:var(--navy);border:1px solid rgba(200,151,30,0.5);border-radius:18px;padding:14px 16px;box-shadow:0 12px 40px rgba(0,0,0,0.4);animation:slideUp .4s cubic-bezier(.4,0,.2,1)}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+#install-banner.show{display:flex;align-items:center;gap:12px}
+.install-icon{font-size:26px;flex-shrink:0;background:rgba(200,151,30,0.15);border-radius:12px;width:46px;height:46px;display:flex;align-items:center;justify-content:center}
+.install-text{flex:1;min-width:0}
+.install-text strong{display:block;font-size:13px;font-weight:600;color:var(--white);margin-bottom:2px}
+.install-text span{font-size:11px;color:rgba(255,255,255,0.55);line-height:1.4}
+.install-actions{display:flex;flex-direction:column;gap:6px;flex-shrink:0}
+.btn-install{background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--navy);border:none;border-radius:10px;padding:8px 14px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap}
+.btn-dismiss{background:transparent;color:rgba(255,255,255,0.4);border:none;font-family:'DM Sans',sans-serif;font-size:11px;cursor:pointer;text-align:center}
+
+/* IOS GUIDE */
+#ios-guide{display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.75);align-items:flex-end;justify-content:center;padding:16px;backdrop-filter:blur(6px)}
+#ios-guide.show{display:flex}
+.ios-guide-box{background:var(--navy);border:1px solid rgba(200,151,30,0.5);border-radius:20px;padding:24px 20px;width:100%;max-width:420px;animation:slideUp .3s ease}
+.ios-guide-box h3{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--gold2);margin-bottom:18px;text-align:center}
+.ios-step{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px}
+.ios-step-num{width:26px;height:26px;border-radius:50%;background:rgba(200,151,30,0.2);border:1px solid rgba(200,151,30,0.4);color:var(--gold2);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.ios-step p{font-size:13px;color:rgba(255,255,255,0.8);line-height:1.5}
+.ios-step p strong{color:var(--white)}
+.ios-hl{background:rgba(200,151,30,0.2);border-radius:6px;padding:1px 7px;color:var(--gold2);font-weight:600}
+.ios-close{width:100%;margin-top:16px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.13);border-radius:12px;padding:12px;color:rgba(255,255,255,0.55);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer}
+</style>
+</head>
+<body>
+
+<div id="install-banner">
+  <div class="install-icon">⛪</div>
+  <div class="install-text"><strong>Instalar como App</strong><span>Acesse offline, direto da tela inicial</span></div>
+  <div class="install-actions">
+    <button class="btn-install" id="btn-install-yes">Instalar</button>
+    <button class="btn-dismiss" id="btn-install-no">Agora não</button>
+  </div>
+</div>
+
+<div id="ios-guide">
+  <div class="ios-guide-box">
+    <h3>✦ Instalar no iPhone ✦</h3>
+    <div class="ios-step"><div class="ios-step-num">1</div><p>Toque no ícone <strong>compartilhar</strong> <span class="ios-hl">⬆</span> na barra inferior do Safari</p></div>
+    <div class="ios-step"><div class="ios-step-num">2</div><p>Role a lista e toque em <span class="ios-hl">Adicionar à Tela de Início</span></p></div>
+    <div class="ios-step"><div class="ios-step-num">3</div><p>Toque em <span class="ios-hl">Adicionar</span> no canto superior direito</p></div>
+    <div class="ios-step"><div class="ios-step-num">4</div><p>O app aparece na tela inicial e abre <strong>offline</strong> ✦</p></div>
+    <button class="ios-close" onclick="closeIosGuide()">Entendi</button>
+  </div>
+</div>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-eyebrow">Paróquia Nossa Senhora das Neves · João Pessoa</div>
+    <h1 class="header-title">Encontro de Casais<br><span>com Cristo</span></h1>
+    <div class="header-badge">✦ XLIII Edição · 29, 30 e 31 de Maio de 2026 ✦</div>
+  </div>
+</div>
+
+<div class="day-switcher">
+  <button class="day-btn active" onclick="switchDay('sexta',this)"><span class="btn-icon">🌙</span><span class="btn-label">Sexta</span><span class="btn-date">29 MAIO</span></button>
+  <button class="day-btn" onclick="switchDay('sabado',this)"><span class="btn-icon">☀️</span><span class="btn-label">Sábado</span><span class="btn-date">30 MAIO</span></button>
+  <button class="day-btn" onclick="switchDay('domingo',this)"><span class="btn-icon">✝</span><span class="btn-label">Domingo</span><span class="btn-date">31 MAIO</span></button>
+</div>
+
+<div class="main">
+
+<!-- ══════════════ SEXTA ══════════════ -->
+<div class="day-panel active" id="panel-sexta">
+  <div class="day-hero">
+    <div class="day-hero-icon">🌙</div>
+    <div class="day-hero-text"><h2>Sexta-<span>Feira</span></h2><p>29 DE MAIO · ABERTURA DO ENCONTRO</p></div>
+    <div class="day-hero-count"><strong>10</strong><span>ATIVIDADES</span></div>
+  </div>
+  <div class="search-bar"><span class="search-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></span><input type="text" placeholder="Buscar atividade, música…" oninput="filterCards(this,'panel-sexta')"></div>
+  <div class="filter-row">
+    <button class="filter-pill active-filter" onclick="filterCat('',this,'panel-sexta')"><span class="pill-dot" style="background:#94a3b8"></span>Todos</button>
+    <button class="filter-pill" onclick="filterCat('P',this,'panel-sexta')"><span class="pill-dot" style="background:#3b82f6"></span>Palestras</button>
+    <button class="filter-pill" onclick="filterCat('A',this,'panel-sexta')"><span class="pill-dot" style="background:#d97706"></span>Adoração</button>
+    <button class="filter-pill" onclick="filterCat('R',this,'panel-sexta')"><span class="pill-dot" style="background:#16a34a"></span>Refeições</button>
+  </div>
+  <div class="schedule-list" id="list-sexta">
+
+    <div class="scard cat-A" data-cat="A" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">18:15</div><div class="t-end">→ 19:00</div><div class="t-dur">45 min</div></div><div class="scard-body"><div class="scard-category">Adoração</div><div class="scard-title">Abertura da Vigília</div><div class="scard-meta"><span class="scard-meta-item">Todas as equipes</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Todas</p></div><div class="detail-group"><label>Músicas</label><p class="music-text">Diante do rei <span class="tom">G</span> · Fogo abrasador <span class="tom">D</span></p></div></div></div></div>
+
+    <div class="scard cat-S" data-cat="S" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">19:00</div><div class="t-end">→ 19:30</div><div class="t-dur">30 min</div></div><div class="scard-body"><div class="scard-title">Chegada dos Encontristas</div><div class="scard-meta"><span class="scard-meta-item">Acolhida · Trânsito</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Acolhida / Trânsito</p></div></div></div></div>
+
+    <div class="scard cat-R" data-cat="R" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">19:30</div><div class="t-end">→ 20:00</div><div class="t-dur">30 min</div></div><div class="scard-body"><div class="scard-category">Lanche</div><div class="scard-title">Recepção e Lanche</div><div class="scard-meta"><span class="scard-meta-item">🎵 A chegada · Lugar de adoração · Potpourri</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Cafezinho / Banda</p></div><div class="detail-group"><label>Músicas</label><p class="music-text">A chegada <span class="tom">C</span> · Lugar de adoração e vida <span class="tom">G</span> · Potpourri do lanchão <span class="tom">D</span></p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">20:00</div><div class="t-end">→ 20:05</div><div class="t-dur">5 min</div></div><div class="scard-body"><div class="scard-title">Entrada no Plenário</div><div class="scard-meta"><span class="scard-meta-item">🎵 Vem queimar o nosso coração (C)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Apresentadores / Banda</p></div><div class="detail-group"><label>Músicas</label><p class="music-text">Vem queimar o nosso coração <span class="tom">C</span></p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">20:05</div><div class="t-end">→ 20:15</div><div class="t-dur">10 min</div></div><div class="scard-body"><div class="scard-title">Boas-Vindas</div><div class="scard-meta"><span class="scard-meta-item">Apresentadores · Boa Vontade</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Apresentadores / Boa Vontade</p></div></div></div></div>
+
+    <div class="scard cat-P" data-cat="P" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">20:15</div><div class="t-end">→ 21:15</div><div class="t-dur">60 min</div></div><div class="scard-body"><div class="scard-category">Palestra + Testemunho</div><div class="scard-title main-event">Plano de Deus · Testemunho do Plano de Deus</div><div class="scard-meta"><span class="scard-meta-item">André e Tati</span><span class="scard-meta-item">🎵 Teus Planos (Allan e Luciana)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Palestrantes</label><p>André e Tati</p></div><div class="detail-group"><label>Equipes</label><p>Recepção aos Palestrantes</p></div><div class="detail-group" style="grid-column:1/-1"><label>Música de Entrada</label><p class="music-main">Teus Planos (Allan e Luciana)</p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">21:15</div><div class="t-end">→ 21:25</div><div class="t-dur">10 min</div></div><div class="scard-body"><div class="scard-title">Avisos · Oração da Noite</div><div class="scard-meta"><span class="scard-meta-item">Apresentadores · Som</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Apresentadores / Boa Vontade / Som</p></div></div></div></div>
+
+    <div class="scard cat-A" data-cat="A" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">21:25</div><div class="t-end">→ 21:35</div><div class="t-dur">10 min</div></div><div class="scard-body"><div class="scard-category">Adoração</div><div class="scard-title main-event">Adoração</div><div class="scard-meta"><span class="scard-meta-item">Padre Allan</span><span class="scard-meta-item">🎵 Diante do rei · Fogo Abrasador · Guarda a minha casa</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Celebrante</label><p>Padre Allan</p></div><div class="detail-group"><label>Equipes</label><p>Apresentadores / Banda / Som / Vigília</p></div><div class="detail-group" style="grid-column:1/-1"><label>Músicas</label><p class="music-text">Diante do rei <span class="tom">G</span> · Fogo Abrasador <span class="tom">D</span> · Guarda a minha casa <span class="tom">G</span></p></div></div></div></div>
+
+    <div class="scard cat-S" data-cat="S" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">21:35</div><div class="t-end">→ 21:50</div><div class="t-dur">15 min</div></div><div class="scard-body"><div class="scard-title">Saída</div><div class="scard-meta"><span class="scard-meta-item">🎵 Te encontrar (G) · Guarda a minha casa (G)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Acolhida / Trânsito / Banda</p></div><div class="detail-group"><label>Músicas</label><p class="music-text">Te encontrar <span class="tom">G</span> · Guarda a minha casa <span class="tom">G</span></p></div></div></div></div>
+
+  </div>
+  <div class="empty-state" id="empty-sexta">Nenhum resultado encontrado.</div>
+</div>
+
+<!-- ══════════════ SÁBADO ══════════════ -->
+<div class="day-panel" id="panel-sabado">
+  <div class="day-hero">
+    <div class="day-hero-icon">☀️</div>
+    <div class="day-hero-text"><h2>Sá<span>bado</span></h2><p>30 DE MAIO · FORMAÇÃO E COMUNHÃO</p></div>
+    <div class="day-hero-count"><strong>32</strong><span>ATIVIDADES</span></div>
+  </div>
+  <div class="search-bar"><span class="search-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></span><input type="text" placeholder="Buscar atividade, música…" oninput="filterCards(this,'panel-sabado')"></div>
+  <div class="filter-row">
+    <button class="filter-pill active-filter" onclick="filterCat('',this,'panel-sabado')"><span class="pill-dot" style="background:#94a3b8"></span>Todos</button>
+    <button class="filter-pill" onclick="filterCat('P',this,'panel-sabado')"><span class="pill-dot" style="background:#3b82f6"></span>Palestras</button>
+    <button class="filter-pill" onclick="filterCat('A',this,'panel-sabado')"><span class="pill-dot" style="background:#d97706"></span>Adoração</button>
+    <button class="filter-pill" onclick="filterCat('R',this,'panel-sabado')"><span class="pill-dot" style="background:#16a34a"></span>Refeições</button>
+    <button class="filter-pill" onclick="filterCat('C',this,'panel-sabado')"><span class="pill-dot" style="background:#7c3aed"></span>Círculos</button>
+    <button class="filter-pill" onclick="filterCat('L',this,'panel-sabado')"><span class="pill-dot" style="background:#db2777"></span>Liturgia</button>
+  </div>
+  <div class="schedule-list" id="list-sabado">
+
+    <div class="scard cat-A" data-cat="A" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">7:30</div><div class="t-end">→ 8:00</div><div class="t-dur">30 min</div></div><div class="scard-body"><div class="scard-category">Adoração</div><div class="scard-title">Abertura da Vigília</div><div class="scard-meta"><span class="scard-meta-item">Todas as equipes</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Todas</p></div></div></div></div>
+
+    <div class="scard cat-S" data-cat="S" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">7:30</div><div class="t-end">→ 8:00</div><div class="t-dur">30 min</div></div><div class="scard-body"><div class="scard-title">Chegada dos Encontristas</div><div class="scard-meta"><span class="scard-meta-item">Acolhida · Trânsito</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Acolhida / Trânsito</p></div></div></div></div>
+
+    <div class="scard cat-R" data-cat="R" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">8:00</div><div class="t-end">→ 8:30</div><div class="t-dur">30 min</div></div><div class="scard-body"><div class="scard-category">Lanche</div><div class="scard-title">Recepção e Lanche</div><div class="scard-meta"><span class="scard-meta-item">🎵 Bom dia amigo · Coma biscoito · Potpourri · Dança do avivamento · Eis-me aqui</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Cafezinho / Banda / Boa Vontade</p></div><div class="detail-group"><label>Músicas</label><p class="music-text">Bom dia amigo <span class="tom">C</span> · Coma biscoito <span class="tom">E</span> · Potpourri do lanchão <span class="tom">D</span> · Dança do avivamento <span class="tom">D</span> · Eis-me aqui <span class="tom">Em</span></p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">8:30</div><div class="t-end">→ 8:45</div><div class="t-dur">15 min</div></div><div class="scard-body"><div class="scard-title">Entrada no Plenário · Boas-Vindas e Oração da Manhã</div><div class="scard-meta"><span class="scard-meta-item">🎵 Bom e agradável (E)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Banda / Apresentadores</p></div><div class="detail-group"><label>Músicas</label><p class="music-text">Bom e agradável <span class="tom">E</span></p></div></div></div></div>
+
+    <div class="scard cat-P" data-cat="P" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">8:45</div><div class="t-end">→ 9:30</div><div class="t-dur">45 min</div></div><div class="scard-body"><div class="scard-category">Palestra</div><div class="scard-title main-event">Harmonia Conjugal</div><div class="scard-meta"><span class="scard-meta-item">Tom e Tássita</span><span class="scard-meta-item">🎵 Meu barco · Vem queimar nosso coração</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Palestrantes</label><p>Tom e Tássita</p></div><div class="detail-group"><label>Equipes</label><p>Recepção aos Palestrantes</p></div><div class="detail-group" style="grid-column:1/-1"><label>Música de Entrada</label><p class="music-main">Meu barco · Vem queimar nosso coração (Gerson, Vitor e Rafa)</p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">9:30</div><div class="t-end">→ 9:40</div><div class="t-dur">10 min</div></div><div class="scard-body"><div class="scard-title">Saída para os Círculos</div><div class="scard-meta"><span class="scard-meta-item">🎵 Eu quero ser de Deus (E) · Te agradeço (E)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Banda</p></div><div class="detail-group"><label>Músicas</label><p class="music-text">Eu quero ser de Deus <span class="tom">E</span> · Te agradeço <span class="tom">E</span></p></div></div></div></div>
+
+    <div class="scard cat-C" data-cat="C" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">9:40</div><div class="t-end">→ 10:10</div><div class="t-dur">30 min</div></div><div class="scard-body"><div class="scard-category">Círculo</div><div class="scard-title main-event">Círculo: Harmonia Conjugal</div><div class="scard-meta"><span class="scard-meta-item">Círculos</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Círculos</p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">10:10</div><div class="t-end">→ 10:15</div><div class="t-dur">5 min</div></div><div class="scard-body"><div class="scard-title">Saída para o Lanche</div><div class="scard-meta"><span class="scard-meta-item">🎵 Construtores da alegria · Super abraço (C)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Banda</p></div><div class="detail-group"><label>Músicas</label><p class="music-text">Construtores da alegria · Super abraço <span class="tom">C</span></p></div></div></div></div>
+
+    <div class="scard cat-R" data-cat="R" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">10:15</div><div class="t-end">→ 10:25</div><div class="t-dur">10 min</div></div><div class="scard-body"><div class="scard-category">Lanche</div><div class="scard-title">Lanche</div><div class="scard-meta"><span class="scard-meta-item">🎵 Coma biscoito (E) · Reggae do missionário (E) · Conto contigo (D)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Cafezinho / Banda / Minimercado</p></div><div class="detail-group"><label>Músicas</label><p class="music-text">Coma biscoito <span class="tom">E</span> · Reggae do missionário <span class="tom">E</span> · Conto contigo <span class="tom">D</span></p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">10:25</div><div class="t-end">→ 10:30</div><div class="t-dur">5 min</div></div><div class="scard-body"><div class="scard-title">Entrada no Plenário</div><div class="scard-meta"><span class="scard-meta-item">🎵 Queima de novo (F)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Banda</p></div><div class="detail-group"><label>Músicas</label><p class="music-text">Queima de novo <span class="tom">F</span></p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">10:30</div><div class="t-end">→ 10:50</div><div class="t-dur">20 min</div></div><div class="scard-body"><div class="scard-title">Apresentação dos Círculos</div><div class="scard-meta"><span class="scard-meta-item">Apresentadores</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Apresentadores</p></div></div></div></div>
+
+    <div class="scard cat-P" data-cat="P" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">10:50</div><div class="t-end">→ 11:30</div><div class="t-dur">40 min</div></div><div class="scard-body"><div class="scard-category">Palestra</div><div class="scard-title main-event">Diálogo com os Filhos</div><div class="scard-meta"><span class="scard-meta-item">Léo e Eveline</span><span class="scard-meta-item">🎵 Aprendiz (B10, Deinha e Rafael)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Palestrantes</label><p>Léo e Eveline</p></div><div class="detail-group"><label>Equipes</label><p>Recepção aos Palestrantes</p></div><div class="detail-group" style="grid-column:1/-1"><label>Música de Entrada</label><p class="music-main">Aprendiz (B10, Deinha e Rafael)</p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">11:30</div><div class="t-end">→ 11:35</div><div class="t-dur">5 min</div></div><div class="scard-body"><div class="scard-title">Saída para Conversa a Dois</div><div class="scard-meta"><span class="scard-meta-item">🎵 Conversa a três (Bm)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Músicas</label><p class="music-text">Conversa a três <span class="tom">Bm</span></p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">11:35</div><div class="t-end">→ 11:50</div><div class="t-dur">15 min</div></div><div class="scard-body"><div class="scard-title">Conversa a Dois</div><div class="scard-meta"><span class="scard-meta-item">Música no som (Banda) · Playlist</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Música no som (Banda)</p></div><div class="detail-group"><label>Músicas</label><p class="music-text">Playlist</p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">11:50</div><div class="t-end">→ 11:55</div><div class="t-dur">5 min</div></div><div class="scard-body"><div class="scard-title">Entrada no Refeitório</div><div class="scard-meta"><span class="scard-meta-item">🎵 Skibão (C)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Músicas</label><p class="music-text">Skibão <span class="tom">C</span></p></div></div></div></div>
+
+    <div class="scard cat-R" data-cat="R" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">11:55</div><div class="t-end">→ 12:30</div><div class="t-dur">35 min</div></div><div class="scard-body"><div class="scard-category">Almoço</div><div class="scard-title">Almoço</div><div class="scard-meta"><span class="scard-meta-item">🎵 Oferecimento / Agradecimento da refeição (C)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Cozinha / Cafezinho / Banda</p></div><div class="detail-group"><label>Músicas</label><p class="music-text">Oferecimento / Agradecimento da refeição <span class="tom">C</span></p></div></div></div></div>
+
+    <div class="scard cat-R" data-cat="R" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">12:30</div><div class="t-end">→ 12:40</div><div class="t-dur">10 min</div></div><div class="scard-body"><div class="scard-category">Café</div><div class="scard-title">Café</div><div class="scard-meta"><span class="scard-meta-item">🎵 Caminha, sorrir e cantar (A)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Cafezinho / Banda</p></div><div class="detail-group"><label>Músicas</label><p class="music-text">Caminha, sorrir e cantar <span class="tom">A</span></p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">12:40</div><div class="t-end">→ 12:45</div><div class="t-dur">5 min</div></div><div class="scard-body"><div class="scard-title">Entrada nos Círculos</div><div class="scard-meta"><span class="scard-meta-item">🎵 Aprendiz (A) · O amor (D)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Músicas</label><p class="music-text">Aprendiz <span class="tom">A</span> · O amor <span class="tom">D</span></p></div></div></div></div>
+
+    <div class="scard cat-C" data-cat="C" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">12:45</div><div class="t-end">→ 13:25</div><div class="t-dur">40 min</div></div><div class="scard-body"><div class="scard-category">Círculo</div><div class="scard-title main-event">Círculo: Cartazes</div><div class="scard-meta"><span class="scard-meta-item">Círculos</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Círculos</p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">13:25</div><div class="t-end">→ 13:30</div><div class="t-dur">5 min</div></div><div class="scard-body"><div class="scard-title">Entrada no Plenário</div><div class="scard-meta"><span class="scard-meta-item">🎵 Guarda a minha casa (G)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Músicas</label><p class="music-text">Guarda a minha casa <span class="tom">G</span></p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">13:30</div><div class="t-end">→ 14:15</div><div class="t-dur">45 min</div></div><div class="scard-body"><div class="scard-title">Apresentação dos Cartazes · Sociodrama COM SOLUÇÃO</div><div class="scard-meta"><span class="scard-meta-item">Apresentadores · Sociodrama / Som</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Apresentadores / Sociodrama / Som</p></div><div class="detail-group"><label>Obs.</label><p>Banda na vigília!</p></div></div></div></div>
+
+    <div class="scard cat-P" data-cat="P" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">14:15</div><div class="t-end">→ 15:00</div><div class="t-dur">45 min</div></div><div class="scard-body"><div class="scard-category">Palestra</div><div class="scard-title main-event">Penitência</div><div class="scard-meta"><span class="scard-meta-item">Padre Victor</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Celebrante</label><p>Padre Victor</p></div><div class="detail-group"><label>Equipes</label><p>Recepção aos Palestrantes</p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">15:00</div><div class="t-end">→ 15:05</div><div class="t-dur">5 min</div></div><div class="scard-body"><div class="scard-title">Saída para o Lanche</div><div class="scard-meta"><span class="scard-meta-item">🎵 Hoje é tempo de louvar a Deus (E)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Músicas</label><p class="music-text">Hoje é tempo de louvar a Deus <span class="tom">E</span></p></div></div></div></div>
+
+    <div class="scard cat-R" data-cat="R" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">15:05</div><div class="t-end">→ 15:15</div><div class="t-dur">10 min</div></div><div class="scard-body"><div class="scard-category">Lanche</div><div class="scard-title">Lanche</div><div class="scard-meta"><span class="scard-meta-item">🎵 Por isso eu te louvo (E) · Eis-me aqui (Em) · Conto contigo (D)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Cafezinho / Banda / Minimercado</p></div><div class="detail-group"><label>Músicas</label><p class="music-text">Por isso eu te louvo <span class="tom">E</span> · Eis-me aqui <span class="tom">Em</span> · Conto contigo <span class="tom">D</span></p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">15:15</div><div class="t-end">→ 15:20</div><div class="t-dur">5 min</div></div><div class="scard-body"><div class="scard-title">Entrada no Plenário</div><div class="scard-meta"><span class="scard-meta-item">🎵 Todo teu (C)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Músicas</label><p class="music-text">Todo teu <span class="tom">C</span></p></div></div></div></div>
+
+    <div class="scard cat-P" data-cat="P" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">15:20</div><div class="t-end">→ 15:50</div><div class="t-dur">30 min</div></div><div class="scard-body"><div class="scard-category">Testemunho</div><div class="scard-title main-event">Testemunho Jovem</div><div class="scard-meta"><span class="scard-meta-item">Matheus Chaves</span><span class="scard-meta-item">🎵 Namorando – Grecco (George e Warlem)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Palestrante</label><p>Matheus Chaves</p></div><div class="detail-group"><label>Música de Entrada</label><p class="music-main">Namorando – Grecco (George e Warlem)</p></div></div></div></div>
+
+    <div class="scard cat-P" data-cat="P" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">15:50</div><div class="t-end">→ 16:30</div><div class="t-dur">40 min</div></div><div class="scard-body"><div class="scard-category">Palestra</div><div class="scard-title main-event">Nossa Senhora na Vida da Família</div><div class="scard-meta"><span class="scard-meta-item">Mariana e Léo</span><span class="scard-meta-item">🎵 Regaço Acolhedor (Guga e Bela)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Palestrantes</label><p>Mariana e Léo</p></div><div class="detail-group"><label>Música de Entrada</label><p class="music-main">Regaço Acolhedor (Guga e Bela)</p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">16:30</div><div class="t-end">→ 16:35</div><div class="t-dur">5 min</div></div><div class="scard-body"><div class="scard-title">Saída para Conversa a Dois</div><div class="scard-meta"><span class="scard-meta-item">🎵 Conversa a três (Bm)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Banda</p></div><div class="detail-group"><label>Músicas</label><p class="music-text">Conversa a três <span class="tom">Bm</span></p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">16:35</div><div class="t-end">→ 16:50</div><div class="t-dur">15 min</div></div><div class="scard-body"><div class="scard-title">Conversa a Dois</div><div class="scard-meta"><span class="scard-meta-item">Música no som (Banda) · Playlist</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Música no som (Banda)</p></div><div class="detail-group"><label>Músicas</label><p class="music-text">Playlist</p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">16:50</div><div class="t-end">→ 16:55</div><div class="t-dur">5 min</div></div><div class="scard-body"><div class="scard-title">Entrada no Plenário</div><div class="scard-meta"><span class="scard-meta-item">🎵 Quem é essa que avança (E) · A escolhida (E)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Banda</p></div><div class="detail-group"><label>Músicas</label><p class="music-text">Quem é essa que avança <span class="tom">E</span> · A escolhida <span class="tom">E</span></p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">16:55</div><div class="t-end">→ 17:05</div><div class="t-dur">10 min</div></div><div class="scard-body"><div class="scard-title">Banda no Plenário</div><div class="scard-meta"><span class="scard-meta-item">🎵 Primeira entrada do DÓ-RÉ-MI</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Banda</p></div><div class="detail-group"><label>Músicas</label><p class="music-text">Primeira entrada do DÓ-RÉ-MI</p></div></div></div></div>
+
+    <div class="scard cat-L" data-cat="L" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">17:05</div><div class="t-end">→ 18:20</div><div class="t-dur">75 min</div></div><div class="scard-body"><div class="scard-category">Liturgia</div><div class="scard-title main-event">Ceia Eucarística · Testemunho da Ceia</div><div class="scard-meta"><span class="scard-meta-item">Padre Allan</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Celebrante</label><p>Padre Allan</p></div><div class="detail-group"><label>Equipes</label><p>Recepção aos Palestrantes / Liturgia</p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">18:20</div><div class="t-end">→ 18:25</div><div class="t-dur">5 min</div></div><div class="scard-body"><div class="scard-title">Saída para o Jantar</div><div class="scard-meta"><span class="scard-meta-item">🎵 Regaço acolhedor (Bm)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Apresentadores / Trânsito / Banda</p></div><div class="detail-group"><label>Músicas</label><p class="music-text">Regaço acolhedor <span class="tom">Bm</span></p></div></div></div></div>
+
+    <div class="scard cat-R" data-cat="R" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">18:25</div><div class="t-end">→ 19:05</div><div class="t-dur">40 min</div></div><div class="scard-body"><div class="scard-category">Jantar</div><div class="scard-title main-event">Jantar de Nossa Senhora</div><div class="scard-meta"><span class="scard-meta-item">🎵 Acaso não sabeis (C) · Ave Maria · Perfeito é quem te criou</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Cafezinho / Cozinha / Banda / Som</p></div><div class="detail-group"><label>Músicas</label><p class="music-text">Acaso não sabeis <span class="tom">C</span> · Ave Maria · Perfeito é quem te criou</p></div></div></div></div>
+
+    <div class="scard cat-R" data-cat="R" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">19:05</div><div class="t-end">→ 19:15</div><div class="t-dur">10 min</div></div><div class="scard-body"><div class="scard-category">Café</div><div class="scard-title">Café</div><div class="scard-meta"><span class="scard-meta-item">🎵 Fiat (D) · Mãe da fé (C)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Cafezinho / Banda</p></div><div class="detail-group"><label>Músicas</label><p class="music-text">Fiat <span class="tom">D</span> · Mãe da fé <span class="tom">C</span></p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">19:15</div><div class="t-end">→ 19:20</div><div class="t-dur">5 min</div></div><div class="scard-body"><div class="scard-title">Entrada nos Círculos</div><div class="scard-meta"><span class="scard-meta-item">🎵 Todo teu (C)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Músicas</label><p class="music-text">Todo teu <span class="tom">C</span></p></div></div></div></div>
+
+    <div class="scard cat-C" data-cat="C" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">19:20</div><div class="t-end">→ 19:50</div><div class="t-dur">30 min</div></div><div class="scard-body"><div class="scard-category">Círculo</div><div class="scard-title main-event">Círculo: O Filho Pródigo</div><div class="scard-meta"><span class="scard-meta-item">Círculos</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Círculos</p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">19:50</div><div class="t-end">→ 20:15</div><div class="t-dur">25 min</div></div><div class="scard-body"><div class="scard-title">Entrada no Plenário · Apresentação dos Círculos</div><div class="scard-meta"><span class="scard-meta-item">🎵 Força e vitória (Bm) · Nova vida, novo tempo (G)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Banda / Apresentadores</p></div><div class="detail-group"><label>Músicas</label><p class="music-text">Força e vitória <span class="tom">Bm</span> · Nova vida, novo tempo <span class="tom">G</span></p></div></div></div></div>
+
+    <div class="scard cat-P" data-cat="P" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">20:15</div><div class="t-end">→ 20:55</div><div class="t-dur">40 min</div></div><div class="scard-body"><div class="scard-category">Palestra</div><div class="scard-title main-event">Fé nos Revezes da Vida</div><div class="scard-meta"><span class="scard-meta-item">Gonçalo e Regiane</span><span class="scard-meta-item">🎵 Pai Nosso de padre Marcelo (todos)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Palestrantes</label><p>Gonçalo e Regiane</p></div><div class="detail-group"><label>Música de Entrada</label><p class="music-main">Pai Nosso de padre Marcelo (todos)</p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">20:55</div><div class="t-end">→ 21:05</div><div class="t-dur">10 min</div></div><div class="scard-body"><div class="scard-title">Avisos · Oração da Noite</div><div class="scard-meta"><span class="scard-meta-item">Apresentadores · Som</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Apresentadores / Som</p></div></div></div></div>
+
+    <div class="scard cat-A" data-cat="A" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">21:05</div><div class="t-end">→ 21:15</div><div class="t-dur">10 min</div></div><div class="scard-body"><div class="scard-category">Adoração</div><div class="scard-title main-event">Adoração</div><div class="scard-meta"><span class="scard-meta-item">Padre Allan</span><span class="scard-meta-item">🎵 Queima novo (F) · Terra Seca (D)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Celebrante</label><p>Padre Allan</p></div><div class="detail-group"><label>Equipes</label><p>Apresentadores / Banda / Som / Vigília</p></div><div class="detail-group" style="grid-column:1/-1"><label>Músicas</label><p class="music-text">Queima novo <span class="tom">F</span> · Terra Seca <span class="tom">D</span></p></div></div></div></div>
+
+    <div class="scard cat-S" data-cat="S" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">21:15</div><div class="t-end">→ 21:30</div><div class="t-dur">15 min</div></div><div class="scard-body"><div class="scard-title">Saída</div><div class="scard-meta"><span class="scard-meta-item">🎵 Isso é o amor (D)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Acolhida / Trânsito / Banda</p></div><div class="detail-group"><label>Músicas</label><p class="music-text">Isso é o amor <span class="tom">D</span></p></div></div></div></div>
+
+  </div>
+  <div class="empty-state" id="empty-sabado">Nenhum resultado encontrado.</div>
+</div>
+
+<!-- ══════════════ DOMINGO ══════════════ -->
+<div class="day-panel" id="panel-domingo">
+  <div class="day-hero">
+    <div class="day-hero-icon">✝</div>
+    <div class="day-hero-text"><h2>Do<span>mingo</span></h2><p>31 DE MAIO · ENCERRAMENTO E SANTA MISSA</p></div>
+    <div class="day-hero-count"><strong>23</strong><span>ATIVIDADES</span></div>
+  </div>
+  <div class="search-bar"><span class="search-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></span><input type="text" placeholder="Buscar atividade, música…" oninput="filterCards(this,'panel-domingo')"></div>
+  <div class="filter-row">
+    <button class="filter-pill active-filter" onclick="filterCat('',this,'panel-domingo')"><span class="pill-dot" style="background:#94a3b8"></span>Todos</button>
+    <button class="filter-pill" onclick="filterCat('P',this,'panel-domingo')"><span class="pill-dot" style="background:#3b82f6"></span>Palestras</button>
+    <button class="filter-pill" onclick="filterCat('A',this,'panel-domingo')"><span class="pill-dot" style="background:#d97706"></span>Adoração</button>
+    <button class="filter-pill" onclick="filterCat('R',this,'panel-domingo')"><span class="pill-dot" style="background:#16a34a"></span>Refeições</button>
+    <button class="filter-pill" onclick="filterCat('C',this,'panel-domingo')"><span class="pill-dot" style="background:#7c3aed"></span>Círculos</button>
+    <button class="filter-pill" onclick="filterCat('L',this,'panel-domingo')"><span class="pill-dot" style="background:#db2777"></span>Liturgia</button>
+  </div>
+  <div class="schedule-list" id="list-domingo">
+
+    <div class="scard cat-A" data-cat="A" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">7:30</div><div class="t-end">→ 8:00</div><div class="t-dur">30 min</div></div><div class="scard-body"><div class="scard-category">Adoração</div><div class="scard-title">Abertura da Vigília</div><div class="scard-meta"><span class="scard-meta-item">Todas as equipes</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Todas</p></div></div></div></div>
+
+    <div class="scard cat-S" data-cat="S" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">7:30</div><div class="t-end">→ 8:00</div><div class="t-dur">30 min</div></div><div class="scard-body"><div class="scard-title">Chegada dos Encontristas</div><div class="scard-meta"><span class="scard-meta-item">Acolhida · Trânsito</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Acolhida / Trânsito</p></div></div></div></div>
+
+    <div class="scard cat-R" data-cat="R" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">8:00</div><div class="t-end">→ 8:15</div><div class="t-dur">15 min</div></div><div class="scard-body"><div class="scard-category">Lanche</div><div class="scard-title">Recepção e Lanche</div><div class="scard-meta"><span class="scard-meta-item">🎵 Bom dia amigo (C) · Coma biscoito (E) · Eternamente (G) · Reggae do missionário (E)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Cafezinho / Banda / Boa Vontade</p></div><div class="detail-group"><label>Músicas</label><p class="music-text">Bom dia amigo <span class="tom">C</span> · Coma biscoito <span class="tom">E</span> · Eternamente <span class="tom">G</span> · Reggae do missionário <span class="tom">E</span></p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">8:15</div><div class="t-end">→ 8:20</div><div class="t-dur">5 min</div></div><div class="scard-body"><div class="scard-title">Entrada no Plenário</div><div class="scard-meta"><span class="scard-meta-item">🎵 Te encontrar (G)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Músicas</label><p class="music-text">Te encontrar <span class="tom">G</span></p></div></div></div></div>
+
+    <div class="scard cat-L" data-cat="L" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">8:20</div><div class="t-end">→ 9:00</div><div class="t-dur">40 min</div></div><div class="scard-body"><div class="scard-category">Liturgia</div><div class="scard-title main-event">Via Sacra</div><div class="scard-meta"><span class="scard-meta-item">Liturgia / Som</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Liturgia / Som</p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">9:00</div><div class="t-end">→ 9:05</div><div class="t-dur">5 min</div></div><div class="scard-body"><div class="scard-title">Boas-Vindas e Oração da Manhã</div><div class="scard-meta"><span class="scard-meta-item">Apresentadores</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Apresentadores</p></div></div></div></div>
+
+    <div class="scard cat-P" data-cat="P" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">9:05</div><div class="t-end">→ 9:50</div><div class="t-dur">45 min</div></div><div class="scard-body"><div class="scard-category">Palestra</div><div class="scard-title main-event">O Sentido da Vida</div><div class="scard-meta"><span class="scard-meta-item">Bruno e Karla</span><span class="scard-meta-item">🎵 Decididamente (Gerson e Lizianne)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Palestrantes</label><p>Bruno e Karla</p></div><div class="detail-group"><label>Música de Entrada</label><p class="music-main">Decididamente (Gerson e Lizianne)</p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">9:50</div><div class="t-end">→ 9:55</div><div class="t-dur">5 min</div></div><div class="scard-body"><div class="scard-title">Saída para o Lanche</div><div class="scard-meta"><span class="scard-meta-item">🎵 Hoje é tempo de louvar a Deus (E)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Músicas</label><p class="music-text">Hoje é tempo de louvar a Deus <span class="tom">E</span></p></div></div></div></div>
+
+    <div class="scard cat-R" data-cat="R" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">9:55</div><div class="t-end">→ 10:05</div><div class="t-dur">10 min</div></div><div class="scard-body"><div class="scard-category">Lanche</div><div class="scard-title">Lanche</div><div class="scard-meta"><span class="scard-meta-item">🎵 Dança do avivamento (D) · Eu vou seguir com fé (E) · Busque o alto (E) · Eis-me aqui (Em)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Cafezinho / Banda / Minimercado</p></div><div class="detail-group"><label>Músicas</label><p class="music-text">Dança do avivamento <span class="tom">D</span> · Eu vou seguir com fé <span class="tom">E</span> · Busque o alto <span class="tom">E</span> · Eis-me aqui <span class="tom">Em</span></p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">10:05</div><div class="t-end">→ 10:10</div><div class="t-dur">5 min</div></div><div class="scard-body"><div class="scard-title">Entrada no Plenário</div><div class="scard-meta"><span class="scard-meta-item">🎵 Vem queimar o nosso coração (C)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Músicas</label><p class="music-text">Vem queimar o nosso coração <span class="tom">C</span></p></div></div></div></div>
+
+    <div class="scard cat-P" data-cat="P" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">10:10</div><div class="t-end">→ 10:55</div><div class="t-dur">45 min</div></div><div class="scard-body"><div class="scard-category">Palestra</div><div class="scard-title main-event">Oração</div><div class="scard-meta"><span class="scard-meta-item">Gilson e Lulu</span><span class="scard-meta-item">🎵 Pai Nosso de padre Marcelo (todos)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Palestrantes</label><p>Gilson e Lulu</p></div><div class="detail-group"><label>Música de Entrada</label><p class="music-main">Pai Nosso de padre Marcelo (todos)</p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">10:55</div><div class="t-end">→ 11:10</div><div class="t-dur">15 min</div></div><div class="scard-body"><div class="scard-title">Banda no Plenário · Saída para Conversa a Dois</div><div class="scard-meta"><span class="scard-meta-item">🎵 Aleluia (F) · Conversa a três (Bm)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Músicas</label><p class="music-text">Aleluia <span class="tom">F</span> · Conversa a três <span class="tom">Bm</span></p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">11:10</div><div class="t-end">→ 11:25</div><div class="t-dur">15 min</div></div><div class="scard-body"><div class="scard-title">Conversa a Dois</div><div class="scard-meta"><span class="scard-meta-item">Música no som (Banda) · Playlist</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Músicas</label><p class="music-text">Playlist</p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">11:25</div><div class="t-end">→ 11:30</div><div class="t-dur">5 min</div></div><div class="scard-body"><div class="scard-title">Entrada no Refeitório</div><div class="scard-meta"><span class="scard-meta-item">🎵 Skibão (C)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Músicas</label><p class="music-text">Skibão <span class="tom">C</span></p></div></div></div></div>
+
+    <div class="scard cat-R" data-cat="R" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">11:30</div><div class="t-end">→ 12:20</div><div class="t-dur">50 min</div></div><div class="scard-body"><div class="scard-category">Almoço</div><div class="scard-title">Almoço</div><div class="scard-meta"><span class="scard-meta-item">🎵 Música da cozinha I e II · Oferecimento / Agradecimento</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Cozinha / Cafezinho / Banda</p></div><div class="detail-group"><label>Músicas</label><p class="music-text">Música da cozinha I e II · Oferecimento / Agradecimento</p></div></div></div></div>
+
+    <div class="scard cat-R" data-cat="R" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">12:20</div><div class="t-end">→ 12:30</div><div class="t-dur">10 min</div></div><div class="scard-body"><div class="scard-category">Café</div><div class="scard-title">Café</div><div class="scard-meta"><span class="scard-meta-item">🎵 Obra nova (C) · Mãe da fé (C)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Cafezinho / Banda</p></div><div class="detail-group"><label>Músicas</label><p class="music-text">Obra nova <span class="tom">C</span> · Mãe da fé <span class="tom">C</span></p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">12:30</div><div class="t-end">→ 12:35</div><div class="t-dur">5 min</div></div><div class="scard-body"><div class="scard-title">Entrada no Plenário</div><div class="scard-meta"><span class="scard-meta-item">🎵 O amor (D)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Músicas</label><p class="music-text">O amor <span class="tom">D</span></p></div></div></div></div>
+
+    <div class="scard cat-P" data-cat="P" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">12:35</div><div class="t-end">→ 12:55</div><div class="t-dur">20 min</div></div><div class="scard-body"><div class="scard-category">Palestra</div><div class="scard-title main-event">Corresponsabilidade e Dízimo</div><div class="scard-meta"><span class="scard-meta-item">Diácono Hermano</span><span class="scard-meta-item">🎵 Bendito seja o Rei da Glória · De mãos estendidas · Tudo é do pai · Oferta de amor</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Palestrante</label><p>Diácono Hermano</p></div><div class="detail-group"><label>Música de Entrada</label><p class="music-main">Bendito seja o Rei da Glória · De mãos estendidas · Tudo é do pai · Oferta de amor</p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">12:55</div><div class="t-end">→ 13:05</div><div class="t-dur">10 min</div></div><div class="scard-body"><div class="scard-title">Banda no Plenário</div><div class="scard-meta"><span class="scard-meta-item">🎵 Segunda entrada do DÓ-RÉ-MI</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Banda</p></div><div class="detail-group"><label>Músicas</label><p class="music-text">Segunda entrada do DÓ-RÉ-MI</p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">13:05</div><div class="t-end">→ 13:40</div><div class="t-dur">35 min</div></div><div class="scard-body"><div class="scard-title">Sociodrama: SEM SOLUÇÃO</div><div class="scard-meta"><span class="scard-meta-item">Banda na vigília!</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Sociodrama / Som</p></div><div class="detail-group"><label>Obs.</label><p>Banda na vigília!</p></div></div></div></div>
+
+    <div class="scard cat-P" data-cat="P" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">13:40</div><div class="t-end">→ 14:20</div><div class="t-dur">40 min</div></div><div class="scard-body"><div class="scard-category">Palestra</div><div class="scard-title main-event">A Vivência do Sacramento do Matrimônio</div><div class="scard-meta"><span class="scard-meta-item">Laércio e Silvia</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Palestrantes</label><p>Laércio e Silvia</p></div><div class="detail-group"><label>Equipes</label><p>Recepção aos Palestrantes</p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">14:20</div><div class="t-end">→ 14:25</div><div class="t-dur">5 min</div></div><div class="scard-body"><div class="scard-title">Saída para Círculos</div><div class="scard-meta"><span class="scard-meta-item">🎵 Quem é essa que avança + A escolhida (E) · Terra seca (D)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Músicas</label><p class="music-text">Quem é essa que avança + A escolhida <span class="tom">E</span> · Terra seca <span class="tom">D</span></p></div></div></div></div>
+
+    <div class="scard cat-C" data-cat="C" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">14:25</div><div class="t-end">→ 15:05</div><div class="t-dur">40 min</div></div><div class="scard-body"><div class="scard-category">Círculo</div><div class="scard-title main-event">Círculo: Parábola do Semeador</div><div class="scard-meta"><span class="scard-meta-item">Círculos</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Círculos</p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">15:05</div><div class="t-end">→ 15:10</div><div class="t-dur">5 min</div></div><div class="scard-body"><div class="scard-title">Saída para o Lanche</div><div class="scard-meta"><span class="scard-meta-item">🎵 Galhos secos (E)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Músicas</label><p class="music-text">Galhos secos <span class="tom">E</span></p></div></div></div></div>
+
+    <div class="scard cat-R" data-cat="R" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">15:10</div><div class="t-end">→ 15:30</div><div class="t-dur">20 min</div></div><div class="scard-body"><div class="scard-category">Lanchão</div><div class="scard-title">Lanchão (apenas encontristas)</div><div class="scard-meta"><span class="scard-meta-item">🎵 Eu quero ser de Deus + Eu te agradeço (E) · Eu vou seguir com fé + Busque o alto (E) · PotPourri de pagode</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Cafezinho / Banda</p></div><div class="detail-group"><label>Músicas</label><p class="music-text">Eu quero ser de Deus + Eu te agradeço <span class="tom">E</span> · Eu vou seguir com fé + Busque o alto <span class="tom">E</span> · PotPourri de pagode</p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">15:30</div><div class="t-end">→ 15:35</div><div class="t-dur">5 min</div></div><div class="scard-body"><div class="scard-title">Entrada no Plenário</div><div class="scard-meta"><span class="scard-meta-item">🎵 Guarda a minha casa (G)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Músicas</label><p class="music-text">Guarda a minha casa <span class="tom">G</span></p></div></div></div></div>
+
+    <div class="scard cat-P" data-cat="P" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">15:35</div><div class="t-end">→ 16:25</div><div class="t-dur">50 min</div></div><div class="scard-body"><div class="scard-category">Palestra</div><div class="scard-title main-event">O Casal Cristão no Mundo de Hoje</div><div class="scard-meta"><span class="scard-meta-item">Adjerfferson e Jussara</span><span class="scard-meta-item">🎵 Família do Céu aqui na terra (Bruno e Thaisinha)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Palestrantes</label><p>Adjerfferson e Jussara</p></div><div class="detail-group"><label>Música de Entrada</label><p class="music-main">Família do Céu aqui na terra (Bruno e Thaisinha)</p></div></div></div></div>
+
+    <div class="scard cat-N" data-cat="N" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">16:25</div><div class="t-end">→ 17:50</div><div class="t-dur">85 min</div></div><div class="scard-body"><div class="scard-title">Apresentação das Equipes · Saída · Entrega das Sacolas</div><div class="scard-meta"><span class="scard-meta-item">🎵 Isso é o amor (D)</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Todas / Banda / Círculos / Acolhida</p></div><div class="detail-group"><label>Músicas</label><p class="music-text">Isso é o amor <span class="tom">D</span></p></div></div></div></div>
+
+    <div class="scard cat-L" data-cat="L" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">17:50</div><div class="t-end">→ 18:05</div><div class="t-dur">15 min</div></div><div class="scard-body"><div class="scard-category">Liturgia</div><div class="scard-title main-event">Procissão de Velas</div><div class="scard-meta"><span class="scard-meta-item">🎵 Como é grande meu amor por você</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Liturgia / Som / Trânsito</p></div><div class="detail-group"><label>Músicas</label><p class="music-text">Como é grande meu amor por você</p></div></div></div></div>
+
+    <div class="scard cat-L" data-cat="L" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">18:05</div><div class="t-end">→ 19:15</div><div class="t-dur">70 min</div></div><div class="scard-body"><div class="scard-category">Liturgia · Encerramento</div><div class="scard-title main-event">Santa Missa</div><div class="scard-meta"><span class="scard-meta-item">Dirigente Espiritual</span><span class="scard-meta-item">🎵 Missa no hinário</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Celebrante</label><p>Dirigente Espiritual</p></div><div class="detail-group"><label>Músicas</label><p class="music-text">Missa no hinário</p></div></div></div></div>
+
+    <div class="scard cat-S" data-cat="S" onclick="toggleCard(this)"><div class="scard-header"><div class="scard-time"><div class="t-start">19:15</div><div class="t-end">→ 19:30</div><div class="t-dur">15 min</div></div><div class="scard-body"><div class="scard-title">Saída e Cumprimentos</div><div class="scard-meta"><span class="scard-meta-item">🎵 Canto final</span></div></div><div class="scard-arrow">▾</div></div><div class="scard-detail"><div class="scard-detail-inner"><div class="detail-group"><label>Equipes</label><p>Trânsito / Banda</p></div><div class="detail-group"><label>Músicas</label><p class="music-text">Canto final</p></div></div></div></div>
+
+  </div>
+  <div class="empty-state" id="empty-domingo">Nenhum resultado encontrado.</div>
+</div>
+
+</div><!-- /main -->
+
+<script>
+if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})})}
+let deferredPrompt=null;
+const banner=document.getElementById('install-banner');
+const btnYes=document.getElementById('btn-install-yes');
+const btnNo=document.getElementById('btn-install-no');
+const iosGuide=document.getElementById('ios-guide');
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;setTimeout(()=>banner.classList.add('show'),2000)});
+btnYes.addEventListener('click',async()=>{banner.classList.remove('show');if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null}});
+btnNo.addEventListener('click',()=>{banner.classList.remove('show')});
+window.addEventListener('appinstalled',()=>{banner.classList.remove('show');deferredPrompt=null});
+function isIOS(){return /iphone|ipad|ipod/i.test(navigator.userAgent)}
+function isStandalone(){return window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true}
+function closeIosGuide(){iosGuide.classList.remove('show')}
+if(isIOS()&&!isStandalone()){if(!sessionStorage.getItem('ecc-ios-dismissed')){setTimeout(()=>iosGuide.classList.add('show'),2500)}}
+function switchDay(day,btn){document.querySelectorAll('.day-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.day-btn').forEach(b=>b.classList.remove('active'));document.getElementById('panel-'+day).classList.add('active');btn.classList.add('active')}
+function toggleCard(card){card.classList.toggle('open')}
+function filterCards(input,panelId){const q=input.value.toLowerCase();const panel=document.getElementById(panelId);const cards=panel.querySelectorAll('.scard');let found=0;cards.forEach(c=>{const hide=q&&!c.textContent.toLowerCase().includes(q);c.classList.toggle('hidden',hide);if(!hide)found++});const id=panelId.replace('panel-','');const empty=document.getElementById('empty-'+id);if(empty)empty.classList.toggle('show',found===0&&q.length>0)}
+function filterCat(cat,btn,panelId){const panel=document.getElementById(panelId);panel.querySelectorAll('.filter-pill').forEach(p=>p.classList.remove('active-filter'));btn.classList.add('active-filter');panel.querySelectorAll('.scard').forEach(c=>{c.classList.toggle('hidden',cat!==''&&c.dataset.cat!==cat)})}
+</script>
+</body>
+</html>
